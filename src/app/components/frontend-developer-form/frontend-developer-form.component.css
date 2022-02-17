@@ -1,0 +1,32 @@
+h1 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.frontend-developer-form {
+  display: flex;
+  flex-flow: column;
+}
+
+.fullname-wrapper {
+  width: auto;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.submit-button-wrapper {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.hobbies-header-wrapper {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row;
+}
+
+.hobbies-header {
+  margin: 0;
+}

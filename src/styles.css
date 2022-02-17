@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; background-color: lightgrey; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.form-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: auto;
+  background-color: white;
+  border: 1px solid black;
+  padding: 30px;
+  border-radius: 5px;
+}

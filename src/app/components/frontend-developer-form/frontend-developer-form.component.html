@@ -1,0 +1,112 @@
+<form class="frontend-developer-form" [formGroup]="frontendDeveloperForm" (ngSubmit)="onSubmit()">
+  <header>
+    <h1>Frontend Developer Form</h1>
+  </header>
+
+  <div class="fullname-wrapper">
+    <mat-form-field>
+      <mat-label>First Name:</mat-label>
+      <input id="first-name" matInput type="text" formControlName="firstName">
+      <mat-error *ngIf="this.firstName.hasError('required')">
+        First Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Last Name:</mat-label>
+      <input id="last-name" matInput type="text" formControlName="lastName">
+      <mat-error *ngIf="this.lastName.hasError('required')">
+        Last Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Choose your birthdate</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="this.dateOfBirth.hasError('required')">
+      Date of Birth is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <div class="framework-version-wrapper">
+    <mat-form-field appearance="fill">
+      <mat-label>Framework:</mat-label>
+      <mat-select formControlName="framework">
+        <mat-option *ngFor="let framework of frameworkData | keyvalue" [value]="framework.key">
+          {{framework.key}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="this.framework.hasError('required')">
+        Framework is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Version:</mat-label>
+      <mat-select formControlName="frameworkVersion" [disabled]="!this.frontendDeveloperForm.controls['framework'].value">
+        <div *ngFor="let key of objectKeys(frameworkData)">
+          <ng-container *ngIf="this.frontendDeveloperForm.controls['framework'].value === key">
+            <mat-option *ngFor="let version of frameworkData[key]" [value]="version">
+              {{version}}
+            </mat-option>
+          </ng-container>
+        </div>
+      </mat-select>
+      <mat-error *ngIf="this.frameworkVersion.hasError('required')">
+        Framework version is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Email:</mat-label>
+    <input id="email" matInput type="email" formControlName="email">
+    <mat-error *ngIf="this.email.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="this.email.hasError('email') && !this.email.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="this.email.hasError('emailAlreadyExists')">
+      Email "test@test.test" already <strong>exists</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <div formArrayName="hobbies">
+    <div class="hobbies-header-wrapper">      
+      <h2 class="hobbies-header">Hobbies</h2>
+      <button mat-stroked-button type="button" (click)="addHobby()" type="button">Add Hobby</button>
+    </div>
+    <div *ngFor="let hobby of hobbies.controls; let i=index">
+      <form [formGroupName]="i">
+        <mat-form-field>
+          <mat-label>Name:</mat-label>
+          <input id="name" matInput type="text" formControlName="name">
+          <mat-error *ngIf="this.lastName.hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Duration:</mat-label>
+          <input id="duraion" matInput type="text" formControlName="duration">
+          <mat-error *ngIf="this.lastName.hasError('required')">
+            Duration is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+
+  <div class="submit-button-wrapper">
+    <button mat-flat-button color="primary" class="submit-button" [disabled]="!frontendDeveloperForm.valid" *ngIf="frontendDeveloperForm.status !== 'PENDING'; else loading">
+      submit
+    </button>
+  </div>
+
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+</form>
